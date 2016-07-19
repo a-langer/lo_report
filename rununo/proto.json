@@ -1,0 +1,24 @@
+{
+  "template": "myfile.odt",
+  "outformat": "new_myfile.odt",
+  "text": {
+    "name": "Иванов Иван Иванович",
+    "age": 30,
+    "keywords": [ "human", "developer" ]
+  },
+  "placeholder": {
+    "name": "Иванов Иван Иванович",
+    "age": 30,
+    "keywords": [ "human", "developer" ]
+  },
+  "input": {
+    "name": "Иванов Иван Иванович",
+    "age": 30,
+    "keywords": [ "human", "developer" ]
+  },
+  "userfield": {
+    "name": "Иванов Иван Иванович",
+    "age": 30,
+    "keywords": [ "human", "developer" ]
+  }
+}   

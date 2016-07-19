@@ -1,0 +1,7 @@
+﻿http://osxh.ru/terminal/command/curl
+Отправить тело запроса из файла:
+curl -X POST --header "Content-Type:application/json;charset=UTF-8" --data @proto.json http://pegas-rds-tst.ftc.ru:8081/post/
+сделать редирект 
+curl -O -L --header "Content-Type:application/json;charset=UTF-8" --data @proto.json http://localhost:8081/post
+curl -O -J -L --header "Content-Type:application/json;charset=UTF-8" --data @proto.json http://localhost:8081/post
+curl -L --header "Content-Type:application/json;charset=UTF-8" --data @proto.json http://localhost:8081/post > file
