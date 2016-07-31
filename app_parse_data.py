@@ -8,21 +8,19 @@ from app_rununo import *
 
 host     = "localhost"
 port     = 2002
-#url      = "file:///C:/Users/langer/script/LO_REPORT/rununo/"
 url      = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/rununo/"
-#url      = "file:///home/admin1/Загрузки/LO_REPORT_0.8/rununo/"
+
 # coonect to libreoffice
 desktop = unoConnect(host, port)
 
 def parseData(dataType, dataMap):
     try:
         decoded = json.loads(dataMap)
-        #print ("JSON parsing example: "+dataType)
+        #print ("JSON parsing example: "+dataType) #debug
     except Exception:
-        print("Error: JSON format error!")
+        print("Error: JSON format error!") #debug
         listErr = {
                     'Message': 'JSON format error!',
-                    #'Message': 'Неправильный формат Json!',
                     'Type': dataType,
                     'Data': dataMap
                   }
@@ -31,11 +29,12 @@ def parseData(dataType, dataMap):
     else:
         if ('template' in decoded):
             template = decoded['template']
-            #print('template: '+ template)
+            #print('template: '+ template) #debug
             try:
-                document = unoOpen(desktop, url, template) # open template
+                # open template
+                document = unoOpen(desktop, url, template) 
             except Exception:
-                print("Не удалось открыть шаблон: "+url+template )
+                print("Could not open the template: "+url+template ) #debug
                 listErr = {
                             'Message': 'Could not open the template!',
                             'File': template,
@@ -45,30 +44,33 @@ def parseData(dataType, dataMap):
             else:
                 if ('outformat' in decoded):
                     outformat = decoded['outformat']
-                    print('outformat: '+ outformat)
+                    print('outformat: '+ outformat) #debug
+                else: # сделай else для всех проверок
+                    print ("outformat none")
+                    return("outformat none")
                 if ('text' in decoded):
                     text_json = decoded['text'] 
-                    # replace text
+                    # func replace text
                     replaceText(document, text_json.items())
                 if ('placeholder'in decoded):
-                    text_json = decoded['placeholder']
-                    # replace placeholder
-                    print ('replace placeholder items !!!')
+                    placeholder_json = decoded['placeholder']
+                    # func replace placeholder
+                    # print ('replace placeholder items !!!') #debug
                 if ('input'in decoded):
-                    text_json = decoded['input'] 
-                    # replace input
-                    print ('replace input items !!!')
+                    input_json = decoded['input'] 
+                    # func replace input
+                    # print ('replace input items !!!') #debug
                 if ('userfield'in decoded):
-                    text_json = decoded['userfield'] 
-                    # replace userfield
-                    print ('replace userfield items !!!')
+                    userfield_json = decoded['userfield'] 
+                    # func replace userfield
+                    # print ('replace userfield items !!!') #debug
                 # save templates
                 return unoSave(document, url, outformat)
         else:
-            print('This json item not used!')
+            print('This json item not used!') #debug
             listErr = {
                         'Message': 'This json item not used!',
-                        'File': decoded.items(),
+                        'Json': str(decoded.items()),
                         'Path': 'url'
                       }
             return respError(status=500, sort_keys=False, Error=listErr)

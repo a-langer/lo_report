@@ -48,16 +48,15 @@ def unoOpen(desktop, url, file):
 """ 
  
 def unoSave(document, url, new_file):
-    # сохранить заполненный шаблон
+    # save completed template
     try:
         document.storeAsURL(url+new_file,())
-        # закрыть сохраненный шаблон
-        #document.dispose()
-    except Exception:
-        # закрыть сохраненный шаблон
+        # close completed template
         document.dispose()
-        print ("Не удалось сохранить файл: "+new_file)
-        #return ("Не удалось сохранить файл: "+new_file)
+    except Exception:
+        # close completed template
+        document.dispose()
+        print ("Unable to save file: "+new_file)
         listErr = {
                     'Message': 'Unable to save file!',
                     'File': new_file,
@@ -68,23 +67,21 @@ def unoSave(document, url, new_file):
     else:
         print("Сохранено в "+url+new_file )
         # return report as file
-        #root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "rununo") + "\\"
-        root = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/rununo/"
-        #root = "file:///home/admin1/Загрузки/LO_REPORT_0.8/rununo/"
+        # no set prefix "file://"
+        root = os.path.dirname(os.path.abspath(__file__)) + "/rununo/"
         return respReport(root, new_file)
         
 def replaceText(document, text_json_items):
-    # дескриптор замены текста
+    # descriptor for replace text
     replace_desc = document.createReplaceDescriptor()
-    # вытаскиваем ключи и значения из блока 'text'    
+    # extract key and value from block 'text'    
     for key, value in text_json_items:
-      #print (key,": ", value)
-      # Текст для замены {{text}}
+      # print (key,": ", value) # debug
+      # placeholder for replace text {{key}}
       replace_desc.setSearchString("{{"+str(key)+"}}")
-      #print("Передано в UNO: ",key, value) # отладка
-
+      # run replace
       find_iter = document.findFirst(replace_desc)
       while find_iter:
-          find_iter.String = str(value) # в виде строки
-          find_iter = document.findNext(find_iter.End, replace_desc) # заменяем текст
-          if not find_iter: break # текст заменен
+          find_iter.String = str(value) # convert to string
+          find_iter = document.findNext(find_iter.End, replace_desc) # replace text
+          if not find_iter: break # replace done
