@@ -18,9 +18,12 @@ from flask import Flask, request, redirect, url_for, render_template, send_from_
 #app = Flask(__name__, static_url_path='')
 app = Flask(__name__)
 # bind to libreoffice module
-from app_rununo import * #unoConnect, unoOpen, unoSave, replaceText
+#from app_rununo import * #unoConnect, unoOpen, unoSave, replaceText
+#import app_rununo
+
 # parse data module
-from app_parse_data import * 
+#from binddata import * 
+import binddata
 
 # config
 #file     = "myfile.odt"
@@ -53,7 +56,7 @@ def toReport(error = None):
             dataMap = request.data.decode('utf-8') # decode from utf-8
             #print("!!!!!!!!!!!!!!!!utf-8"+dataMap)
             #return dataMap
-            return parseData(request.mimetype, dataMap)
+            return binddata.parseData(request.mimetype, dataMap)
     else:
         return render_template('post.html', error=error)
         
