@@ -17,20 +17,9 @@ sys.path.append(lib_itsdangerous)
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, jsonify
 #app = Flask(__name__, static_url_path='')
 app = Flask(__name__)
-# bind to libreoffice module
-#from app_rununo import * #unoConnect, unoOpen, unoSave, replaceText
-#import app_rununo
 
 # parse data module
-#from binddata import * 
 import binddata
-
-# config
-#file     = "myfile.odt"
-#new_file = "new_myfile.odt"
-
-# coonect to libreoffice
-#desktop = unoConnect(host, port)
 
 # Flask ON
 app.url_map.strict_slashes = False   # Mixing /a/ and /a

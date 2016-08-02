@@ -48,7 +48,7 @@ def parseData(dataType, dataMap):
                     print('outformat: '+ outformat) #debug
                 else: # сделай else для всех проверок
                     listErr = {
-                                'Message': 'outformat not defined!',
+                                'Message': 'item outformat not defined!',
                                 'Json': str(decoded.items()),
                                 'Path': url
                               }
