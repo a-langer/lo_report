@@ -1,11 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 # this is module parse json or xml
 
-# module parse json
-import json, os
-
-# bind to libreoffice module
-import rununo
+import json, os # module parse json
+import rununo   # module libreoffice-uno
+import respmsg  # response json message
 
 host     = "localhost"
 port     = 2002
@@ -25,7 +23,7 @@ def parseData(dataType, dataMap):
                     'Type': dataType,
                     'Data': dataMap
                   }
-        return respError(status=500, indent=1, sort_keys=None, Error=listErr)
+        return respmsg.respError(status=500, indent=1, sort_keys=None, Error=listErr)
         
     else:
         if ('template' in decoded):
@@ -35,13 +33,14 @@ def parseData(dataType, dataMap):
                 # open template
                 document = rununo.unoOpen(desktop, url, template) 
             except Exception:
+                #document.dispose()
                 print("Could not open the template: "+url+template ) #debug
                 listErr = {
                             'Message': 'Could not open the template!',
                             'File': template,
                             'Path': url
                           }
-                return rununo.respError(status=500, sort_keys=False, Error=listErr)
+                return respmsg.respError(status=500, sort_keys=False, Error=listErr)
             else:
                 if ('outformat' in decoded):
                     outformat = decoded['outformat']
@@ -53,7 +52,8 @@ def parseData(dataType, dataMap):
                                 'Path': url
                               }
                     print ("outformat none")
-                    return rununo.respError(status=500, sort_keys=False, Error=listErr)
+                    document.dispose()
+                    return respmsg.respError(status=500, sort_keys=False, Error=listErr)
                 if ('text' in decoded):
                     text_json = decoded['text'] 
                     # func replace text
@@ -79,4 +79,5 @@ def parseData(dataType, dataMap):
                         'Json': str(decoded.items()),
                         'Path': 'url'
                       }
-            return rununo.respError(status=500, sort_keys=False, Error=listErr)
+            #document.dispose()
+            return respmsg.respError(status=500, sort_keys=False, Error=listErr)
