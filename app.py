@@ -2,17 +2,18 @@
 # more modules this https://pypi.python.org/pypi/
 import os, sys
 # add paths for local modules
-base_dir = os.path.dirname(os.path.abspath(__file__))
-lib_flask = os.path.abspath(os.path.join(base_dir + '/modules/flask/'))
-sys.path.append(lib_flask)
-lib_werkzeug = os.path.abspath(os.path.join(base_dir + '/modules/Werkzeug/'))
-sys.path.append(lib_werkzeug)
-lib_jinja2 = os.path.abspath(os.path.join(base_dir + '/modules/Jinja2/'))
-sys.path.append(lib_jinja2)
-lib_markupsafe = os.path.abspath(os.path.join(base_dir + '/modules/markupsafe/'))
-sys.path.append(lib_markupsafe)
+base_dir         = os.path.dirname(os.path.abspath(__file__))
+lib_flask        = os.path.abspath(os.path.join(base_dir + '/modules/flask/'))
+lib_werkzeug     = os.path.abspath(os.path.join(base_dir + '/modules/Werkzeug/'))
+lib_jinja2       = os.path.abspath(os.path.join(base_dir + '/modules/Jinja2/'))
+lib_markupsafe   = os.path.abspath(os.path.join(base_dir + '/modules/markupsafe/'))
 lib_itsdangerous = os.path.abspath(os.path.join(base_dir + '/modules/itsdangerous/'))
+sys.path.append(lib_markupsafe)
+sys.path.append(lib_jinja2)
+sys.path.append(lib_werkzeug)
+sys.path.append(lib_flask)
 sys.path.append(lib_itsdangerous)
+
 # flask module
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, jsonify
 #app = Flask(__name__, static_url_path='')
